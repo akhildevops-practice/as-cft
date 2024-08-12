@@ -1,0 +1,55 @@
+AWS CFT - 11
+CLOUD FORMATION TEMPLATE
+
+
+AWS CLI
+* AWS CONTAINS A PYTHON API'S WHICH ARE USED TO AWS CLI CONFIGURATION, AWS CLI, CFT AND TERRAFORM ARE USED FOR THE SAME PURPOSE. BUT AWS CLI IS COMPLETLEY A PROGRAMATIC ACCESS, WHERE WE NEED TO CREATE IAM USER WITH REQUIRED POLICIES, GENERATE A ACCESS AND SECRET KEY. 
+* aws configure
+
+* AFTER THIS WE CAN CREATE, DELETE, AND ALSO DO ALL THE PROCESSES DONE ON MANAGEMENT CONSOLE, USING CLI.
+* THE PURPOSE AWS CLI IS FAST CREATING OF IAC ON AWS.
+* FOR SHORT AND QUICK ACCESS WE USE CLI
+
+CFT
+
+* BASICALLY CLOUD PLATFORM LISTENS ONLY API CALLS, THERE IS AN IAC BETWEEN AWS AND USER. THE COMMUNICATION BETWEEN USER AND IAC ( CLI, CFT, TERRAFORM) IS DONE BY USING VERSIONING, DECLARATIVE, YAML, JSON. TO REACH AWS CLOUD PLATFORM. CFT IS ONLY SUPPORTS TO AWS CLOUD PLATFORM.
+ 
+* CFT ACTS AS THE MIDDLE MAN(IAC) BETWEEN USER(YAML/JSON) AND AWS(APIS), CFT TAKES INFO FROM USERS AND CONVERTS THAT TO AWS. CFT IS THE PRINCIPLE IAC WHICH SUPORTS ONLY AWS, TERRAFORM SUPPORTS OTHER CLOUD PLATFORMS.
+* VERSIONED IS EXPLAINED AS THE PROCESS OF STORING DIFFERENT VERSIONS IF SOMETHING GOES BACK WE CAN REVERT IT BACK AS SAME AS GIT, WE CAN STORE IN GIT, S3 ETC.
+* FOR CREATING 2 OR MORE RESOURCES WE USE CFT
+
+FEATURES OF CFT
+1. CREATING INFRASTRUCTURE IS THE PRIMARY GOAL.
+2. DRIFT DETECTION.
+USING CFT PRINCIPLE IF WE CREATE EC2 + S3, IF SOMEONE HAS CHANGED THE S3 VERSIONING ENABLE TO DISABLE FROM UI, DRIFT DETECTION OPTION PERIODICALLY NOTIFIES THAT SOME CHANGE HAS HAPPEND. BY THIS CAN WE FIX THE THING IN NO TIME.
+TO CREATE CONNECTION BETWEEN YAML AND CFT(UI OR CLI) WE HAVE STACKS IN CFT, WE CREATE AND IMPORT THEM.
+
+ AWS CFT TEMPLATE FORMAT ( STUDY FROM AWS CFT DOCUMENTATION) AND TEMPLATE REFERENCE IS USED TO GET TEMPLATE OF AWS SERVICES.
+
+_+++++++++++++++++++++++PRACTICAL DEMO++++++++++++++++++++++++++++++++++++++++++
+
+1. create a stackopen cft console, we can create templete, use existing templete, we can create using a pictorial form.
+2. From AWS CFT documentation open template reference and search s3 to create s3 bucket to take parameters. 
+3. Pictorial template search and drag s3:bucket to get the template in yaml/json.
+4. use the syntax in .yml file
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: "akhilprabhu-demo-cft.com"
+5. upload in stack formation. After creation of stack we can see s3 bucket is created.
+6. Now delete s3 bucket in s3 service, but the stack and templetes are not deleted in cft.
+7. Now delete the cft, stack.
+8. Create a template with adding bucket versioning, use the template in stack creation.
+Resources:
+  Bucket:
+    Type: AWS::S3::Bucket
+    Properties: 
+      BucketName: "akhilprabhu-demo-cft.com"
+      VersioningConfiguration:
+        Status: Enabled
+9. Go s3 bucket properities here we can see that bucket versioning is enabled.
+10. Disable the versioning.
+11. Go to CFT stack and drift it. View drift results. we can see the changes done.
+
+*** THE MAIN DIFFERENCE BETWEEN THE CFT AND TERRAFORM, CFT IS ONLY FOR AWS IAC, WHERE AS TERRAFORM IS USED TO CREATE IAC FOR MULTIPLE CLOUD PLATFORMS.
